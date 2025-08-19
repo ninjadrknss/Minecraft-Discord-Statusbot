@@ -139,14 +139,14 @@ public class StatusbotMain implements ModInitializer {
         ServerPlayConnectionEvents.JOIN.register((serverPlayNetworkHandler,packetSender,server)->{
             BotManager.regBot(
                     ConfigManager.configuration.getString("bot_token"),
-                    Parser.createStatusMessage(()->MakeStringListWith(server.getPlayerNames(),serverPlayNetworkHandler.getPlayer().getEntityName()),server.getPlayerNames().length+1),
+                    Parser.createStatusMessage(()->MakeStringListWith(server.getPlayerNames(),serverPlayNetworkHandler.getPlayer().getNameForScoreboard()),server.getPlayerNames().length+1),
                     this
             );
             if(BotManager.jda!=null) {
                 if (ConfigManager.getBool("enable_server_join_messages")) {
                     String joinMessage = Parser.createJoinMessage(
-                            ()->MakeStringListWith(server.getPlayerNames(),serverPlayNetworkHandler.getPlayer().getEntityName()),
-                            serverPlayNetworkHandler.getPlayer().getEntityName(),
+                            ()->MakeStringListWith(server.getPlayerNames(),serverPlayNetworkHandler.getPlayer().getNameForScoreboard()),
+                            serverPlayNetworkHandler.getPlayer().getNameForScoreboard(),
                             server.getPlayerNames().length+1
                     );
                     if (ConfigManager.getBool("enable_text_channel_status_messages")) {
@@ -170,14 +170,14 @@ public class StatusbotMain implements ModInitializer {
         ServerPlayConnectionEvents.DISCONNECT.register((serverPlayNetworkHandler,server)->{
             BotManager.regBot(
                     ConfigManager.configuration.getString("bot_token"),
-                    Parser.createStatusMessage(()->MakeStringList(server.getPlayerNames(),serverPlayNetworkHandler.getPlayer().getEntityName()),server.getPlayerNames().length-1),
+                    Parser.createStatusMessage(()->MakeStringList(server.getPlayerNames(),serverPlayNetworkHandler.getPlayer().getNameForScoreboard()),server.getPlayerNames().length-1),
                     this
             );
             if(BotManager.jda!=null) {
                 if (ConfigManager.getBool("enable_server_leave_messages")) {
                     String startMessage = Parser.createLeaveMessage(
-                            ()->MakeStringList(server.getPlayerNames(),serverPlayNetworkHandler.getPlayer().getEntityName()),
-                            serverPlayNetworkHandler.getPlayer().getEntityName(),
+                            ()->MakeStringList(server.getPlayerNames(),serverPlayNetworkHandler.getPlayer().getNameForScoreboard()),
+                            serverPlayNetworkHandler.getPlayer().getNameForScoreboard(),
                             server.getPlayerNames().length-1
                     );
                     if (ConfigManager.getBool("enable_text_channel_status_messages")) {
